@@ -7,6 +7,11 @@
     home: "/var/{{ restic_local_user }}"
     createhome: yes
 
+- name: Install restic
+  become: True
+  apt:
+    name: restic
+
 - name: Configure restic backup
   become: True
   template:
