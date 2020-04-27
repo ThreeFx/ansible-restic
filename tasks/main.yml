@@ -32,7 +32,7 @@
     state: directory
   when: restic_ensure_remote_path_exists
 
-- name: Initialize restic backup
+- name: Check if restic backup initialized
   become: True
   become_user: "{{ restic_local_user }}"
   shell: restic stats
