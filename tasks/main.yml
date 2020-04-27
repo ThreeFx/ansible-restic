@@ -35,7 +35,19 @@
 - name: Initialize restic backup
   become: True
   become_user: "{{ restic_local_user }}"
+  shell: restic stats
+  environment:
+    RESTIC_REPOSITORY: "sftp:{{ restic_remote_user }}@{{ restic_host }}:{{ restic_remote_path }}"
+    RESTIC_PASSWORD: "{{ restic_password }}"
+  register: restic_stat
+  changed_when: False
+  failed_when: False
+
+- name: Initialize restic backup
+  become: True
+  become_user: "{{ restic_local_user }}"
   shell: restic init
   environment:
     RESTIC_REPOSITORY: "sftp:{{ restic_remote_user }}@{{ restic_host }}:{{ restic_remote_path }}"
     RESTIC_PASSWORD: "{{ restic_password }}"
+  when: restic_stat.rc != 0
