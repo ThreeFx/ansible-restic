@@ -17,6 +17,7 @@
     owner: "{{ restic_remote_user }}"
     group: "{{ restic_remote_user }}"
     state: directory
+  when: restic_ensure_remote_path_exists
 
 - name: Initialize restic backup
   become: True
