@@ -22,6 +22,7 @@ Role Variables
 `restic_local_paths` | `[]`                 | required, paths on the local host
 `restic_remote_user` | `remote_user`        | required, remote user
 `restic_remote_path` | `"/some/path"`       | required, path on the remote host
+`restic_ensure_remote_path_exists` | false  | optional, whether to ensure the remote location exists (via Ansible)
 
 Dependencies
 ------------
