@@ -1,4 +1,12 @@
 ---
+- name: Ensure local user exists
+  become: True
+  user:
+    name: "{{ restic_local_user }}"
+    system: yes
+    home: "/var/{{ restic_local_user }}"
+    createhome: yes
+
 - name: Configure restic backup
   become: True
   template:
