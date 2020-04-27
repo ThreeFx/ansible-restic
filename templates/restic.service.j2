@@ -1,0 +1,11 @@
+[Unit]
+Description=Backup local repositories to remote host
+
+[Service]
+Environment=RESTIC_REPOSITORY=sftp://{{ restic_remote_user }}@{{ restic_host }}:{{ restic_path }}
+Environment=RESTIC_PASSPHRASE={{ restic_passphrase }}
+User={{ restic_local_user }}
+{% for path in restic_local_paths %}
+ExecStart=/usr/bin/restic backup {{ path }}
+{% endfor %}
+ExecStart=/usr/bin/restic forget --keep-last 14 --keep-weekly 52

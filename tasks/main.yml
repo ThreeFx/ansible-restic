@@ -1,0 +1,27 @@
+---
+- name: Configure restic backup
+  become: True
+  template:
+    src: "restic.{{ item }}.j2"
+    dest: "/etc/systemd/system/restic.{{ item }}"
+  with_items:
+    - service
+    - timer
+  notify: restart restic timer
+
+- name: Ensure remote backup location exists
+  delegate_to: "{{ restic_host }}"
+  become: True
+  file:
+    path: "{{ restic_path }}"
+    owner: "{{ restic_remote_user }}"
+    group: "{{ restic_remote_user }}"
+    state: directory
+
+- name: Initialize restic backup
+  become: True
+  become_user: "{{ restic_local_user }}"
+  shell: restic init
+    environment:
+      RESTIC_REPOSITORY: "sftp://{{ restic_remote_user }}@{{ restic_host }}:{{ restic_path }}"
+      RESTIC_PASSPHRASE: "{{ restic_passphrase }}"

@@ -1,0 +1,7 @@
+---
+- name: restart restic timer
+  become: True
+  systemd:
+    name: restic.timer
+    state: restarted
+    enabled: yes
