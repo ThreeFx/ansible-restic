@@ -16,7 +16,7 @@ Role Variables
 
 | Variable Name | Default Value | Description |
 --------------- |---------------|--------------
-`restic_passphrase` | supersecretpassphrase | required, passphrase for the backup
+`restic_password` | supersecretpassword     | required, password for the backup
 `restic_host` | `some.host.tld`             | required, remote host
 `restic_local_user` | `local_user`          | required, user on the local host
 `restic_local_paths` | `[]`                 | required, paths on the local host

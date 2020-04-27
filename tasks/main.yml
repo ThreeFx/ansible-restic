@@ -38,4 +38,4 @@
   shell: restic init
   environment:
     RESTIC_REPOSITORY: "sftp:{{ restic_remote_user }}@{{ restic_host }}:{{ restic_remote_path }}"
-    RESTIC_PASSPHRASE: "{{ restic_passphrase }}"
+    RESTIC_PASSWORD: "{{ restic_password }}"

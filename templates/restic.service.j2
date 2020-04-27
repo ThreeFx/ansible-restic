@@ -2,8 +2,8 @@
 Description=Backup local repositories to remote host
 
 [Service]
-Environment=RESTIC_REPOSITORY=sftp://{{ restic_remote_user }}@{{ restic_host }}:{{ restic_remote_path }}
-Environment=RESTIC_PASSPHRASE={{ restic_passphrase }}
+Environment=RESTIC_REPOSITORY=sftp:{{ restic_remote_user }}@{{ restic_host }}:{{ restic_remote_path }}
+Environment=RESTIC_PASSWORD={{ restic_password }}
 User={{ restic_local_user }}
 {% for path in restic_local_paths %}
 ExecStart=/usr/bin/restic backup {{ path }}
