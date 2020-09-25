@@ -3,7 +3,7 @@ Description=Backup local repositories to remote host
 
 [Service]
 Type=oneshot
-Environment=RESTIC_REPOSITORY=sftp:{{ restic_remote_user }}@{{ restic_host }}:{{ restic_remote_path }}
+Environment=RESTIC_REPOSITORY={{ restic_repository }}
 Environment=RESTIC_PASSWORD={{ restic_password }}
 User={{ restic_local_user }}
 {% for path in restic_local_paths %}
