@@ -1,11 +1,9 @@
 ---
 restic_password: supersecretpassword     # required, passphrase for the backup
-restic_host: some.host.tld               # required, remote host
 restic_local_user: local_user            # required, user on the local host
 restic_local_paths: []                   # required, paths on the local host
 # - /some/path
 # - /some/other/path
-restic_remote_user: remote_user          # required, remote user
-restic_remote_path: /some/path           # required, path on the remote host
-
-restic_ensure_remote_path_exists: false  # optional, whether to ensure the remote path exists
+restic_name: "mybackup"                  # required, name
+restic_repository: "sftp:user@host:/dst" # required, repository to back up to.
+                                         #           if remote be sure to enable passwordless login

@@ -12,32 +12,22 @@
   apt:
     name: restic
 
-- name: Configure restic backup
+- name: Configure restic systemd units
   become: True
   template:
     src: "restic.{{ item }}.j2"
-    dest: "/etc/systemd/system/restic.{{ item }}"
+    dest: "/etc/systemd/system/restic.{{ restic_name }}.{{ item }}"
   with_items:
     - service
     - timer
   notify: restart restic timer
-
-- name: Ensure remote backup location exists
-  delegate_to: "{{ restic_host }}"
-  become: True
-  file:
-    path: "{{ restic_remote_path }}"
-    owner: "{{ restic_remote_user }}"
-    group: "{{ restic_remote_user }}"
-    state: directory
-  when: restic_ensure_remote_path_exists
 
 - name: Check if restic backup initialized
   become: True
   become_user: "{{ restic_local_user }}"
   shell: restic stats
   environment:
-    RESTIC_REPOSITORY: "sftp:{{ restic_remote_user }}@{{ restic_host }}:{{ restic_remote_path }}"
+    RESTIC_REPOSITORY: "{{ restic_repository }}"
     RESTIC_PASSWORD: "{{ restic_password }}"
   register: restic_stat
   changed_when: False
@@ -48,6 +38,6 @@
   become_user: "{{ restic_local_user }}"
   shell: restic init
   environment:
-    RESTIC_REPOSITORY: "sftp:{{ restic_remote_user }}@{{ restic_host }}:{{ restic_remote_path }}"
+    RESTIC_REPOSITORY: "{{ restic_repository }}"
     RESTIC_PASSWORD: "{{ restic_password }}"
   when: restic_stat.rc != 0
